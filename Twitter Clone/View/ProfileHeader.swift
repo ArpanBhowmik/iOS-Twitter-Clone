@@ -89,7 +89,21 @@ class ProfileHeader: UICollectionReusableView {
         return userDetailsStack
     }()
     
-    private let filterBar = ProfileFilterView()
+    private lazy var underlineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .twitterBlue
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
+    private lazy var filterBar: ProfileFilterView = {
+        let filterBar = ProfileFilterView()
+        filterBar.translatesAutoresizingMaskIntoConstraints = false
+        filterBar.delegate = self
+        
+        return filterBar
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -108,8 +122,7 @@ class ProfileHeader: UICollectionReusableView {
         addSubview(editProfileFollowButton)
         addSubview(userDetailsStackView)
         addSubview(filterBar)
-        
-        filterBar.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(underlineView)
                 
         NSLayoutConstraint.activate([
             //containerView
@@ -145,7 +158,13 @@ class ProfileHeader: UICollectionReusableView {
             filterBar.leadingAnchor.constraint(equalTo: leadingAnchor),
             filterBar.trailingAnchor.constraint(equalTo: trailingAnchor),
             filterBar.bottomAnchor.constraint(equalTo: bottomAnchor),
-            filterBar.heightAnchor.constraint(equalToConstant: 50)
+            filterBar.heightAnchor.constraint(equalToConstant: 50),
+            
+            //underlineView
+            underlineView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            underlineView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            underlineView.widthAnchor.constraint(equalToConstant: frame.width / 3),
+            underlineView.heightAnchor.constraint(equalToConstant: 2)
         ])
     }
 }
@@ -158,5 +177,18 @@ extension ProfileHeader {
     
     @objc private func handleEditProfileFollow() {
         
+    }
+}
+
+//MARK: - FilterViewDelegate
+extension ProfileHeader: ProfileFilterViewDelegate {
+    func filterView(_ view: ProfileFilterView, didSelect indexPath: IndexPath) {
+        guard let cell = view.collectionView.cellForItem(at: indexPath) else { return }
+
+        let newPos = cell.frame.origin.x
+        
+        UIView.animate(withDuration: 0.3) {
+            self.underlineView.frame.origin.x = newPos
+        }
     }
 }
