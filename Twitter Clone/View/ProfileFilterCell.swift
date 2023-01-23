@@ -10,6 +10,10 @@ import UIKit
 class ProfileFilterCell: UICollectionViewCell {
     static let reuseIdentifier = "ProfileFilterCell"
     
+    var option: ProfileFilterOptions = .tweets {
+        didSet { titleLabel.text = option.description }
+    }
+    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Test"

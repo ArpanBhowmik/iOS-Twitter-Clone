@@ -7,8 +7,18 @@
 
 import UIKit
 
+protocol ProfileHeaderDelegate: AnyObject {
+    func handleDismiss()
+}
+
 class ProfileHeader: UICollectionReusableView {
     static let reuseIdentifier = "ProfileHeader"
+    
+    var user: User? {
+        didSet { configure() }
+    }
+    
+    weak var delegate: ProfileHeaderDelegate?
     
     private lazy var containerView: UIView = {
         let view = UIView()
@@ -40,7 +50,6 @@ class ProfileHeader: UICollectionReusableView {
     
     private lazy var editProfileFollowButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Loading", for: .normal)
         button.layer.borderWidth = 1.25
         button.layer.borderColor = UIColor.twitterBlue.cgColor
         button.setTitleColor(.twitterBlue, for: .normal)
@@ -56,7 +65,6 @@ class ProfileHeader: UICollectionReusableView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.boldSystemFont(ofSize: 20)
-        label.text = "Arpan Bhowmik"
         
         return label
     }()
@@ -66,7 +74,6 @@ class ProfileHeader: UICollectionReusableView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = .lightGray
-        label.text = "@arpan"
         
         return label
     }()
@@ -105,6 +112,36 @@ class ProfileHeader: UICollectionReusableView {
         return filterBar
     }()
     
+    private lazy var followingLabel: UILabel = {
+        let label = UILabel()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleFollowingTap))
+        label.addGestureRecognizer(tap)
+        label.isUserInteractionEnabled = true
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        return label
+    }()
+    
+    private lazy var followersLabel: UILabel = {
+        let label = UILabel()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleFollowersTap))
+        label.addGestureRecognizer(tap)
+        label.isUserInteractionEnabled = true
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        return label
+    }()
+    
+    private lazy var followStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [followingLabel, followersLabel])
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        stackView.spacing = 8
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return stackView
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -123,6 +160,7 @@ class ProfileHeader: UICollectionReusableView {
         addSubview(userDetailsStackView)
         addSubview(filterBar)
         addSubview(underlineView)
+        addSubview(followStack)
                 
         NSLayoutConstraint.activate([
             //containerView
@@ -164,18 +202,45 @@ class ProfileHeader: UICollectionReusableView {
             underlineView.bottomAnchor.constraint(equalTo: bottomAnchor),
             underlineView.leadingAnchor.constraint(equalTo: leadingAnchor),
             underlineView.widthAnchor.constraint(equalToConstant: frame.width / 3),
-            underlineView.heightAnchor.constraint(equalToConstant: 2)
+            underlineView.heightAnchor.constraint(equalToConstant: 2),
+            
+            //followStack
+            followStack.topAnchor.constraint(equalTo: userDetailsStackView.bottomAnchor, constant: 8),
+            followStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12)
         ])
+    }
+    
+    private func configure() {
+        guard let user else { return }
+        
+        let viewModel = ProfileHeaderViewModel(user: user)
+        
+        followersLabel.attributedText = viewModel.followersString
+        followingLabel.attributedText = viewModel.followingString
+        
+        profileImageView.sd_setImage(with: user.profileImageUrl)
+        editProfileFollowButton.setTitle(viewModel.actionButtonTitle, for: .normal)
+        
+        usernameLabel.text = viewModel.userName
+        fullNameLabel.text = user.fullName
     }
 }
 
 //MARK: - Selectors
 extension ProfileHeader {
     @objc private func handleDismiss() {
-        
+        delegate?.handleDismiss()
     }
     
     @objc private func handleEditProfileFollow() {
+        
+    }
+    
+    @objc private func handleFollowingTap() {
+        
+    }
+    
+    @objc private func handleFollowersTap() {
         
     }
 }

@@ -9,7 +9,7 @@ import Firebase
 import UIKit
 
 class MainTabController: UITabBarController {
-    private let actionButton: UIButton = {
+    private lazy var actionButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = .white
         button.backgroundColor = .twitterBlue
@@ -35,7 +35,7 @@ class MainTabController: UITabBarController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         authenticateUserAndConfigureUI()
-       // logUserOut()
+        //logUserOut()
     }
     
     private func configureUI() {
