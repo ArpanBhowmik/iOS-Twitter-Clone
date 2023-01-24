@@ -115,7 +115,8 @@ class TweetCell: UICollectionViewCell {
         addSubview(stackView)
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: profileImageView.topAnchor),
-            stackView.leadingAnchor.constraint(equalToSystemSpacingAfter: profileImageView.trailingAnchor, multiplier: 1)
+            stackView.leadingAnchor.constraint(equalToSystemSpacingAfter: profileImageView.trailingAnchor, multiplier: 1),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8)
         ])
         
         infoLabel.text = "Arpan Bhowmik @arpan.b"

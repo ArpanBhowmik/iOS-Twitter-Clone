@@ -64,6 +64,7 @@ class UploadTweetController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.spacing = 12
+        stackView.alignment = .top
         
         view.addSubview(stackView)
         NSLayoutConstraint.activate([
