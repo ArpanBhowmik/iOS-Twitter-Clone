@@ -9,6 +9,8 @@ import UIKit
 
 class UploadTweetController: UIViewController {
     private var user: User
+    private var config: UploadTweetConfiguration
+    private lazy var viewModel = UploadTweetViewModel(config: config)
     
     private lazy var actionButton: UIButton = {
         let button = UIButton(type: .system)
@@ -40,10 +42,21 @@ class UploadTweetController: UIViewController {
         return imageView
     }()
     
+    private lazy var replyLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.textColor = .lightGray
+        label.text = "Replying to"
+        
+        return label
+    }()
+
     private let captionTextView = CaptionTextView()
     
-    init(user: User) {
+    init(user: User, config: UploadTweetConfiguration) {
         self.user = user
+        self.config = config
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -66,13 +79,25 @@ class UploadTweetController: UIViewController {
         stackView.spacing = 12
         stackView.alignment = .top
         
-        view.addSubview(stackView)
-        NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.topAnchor, multiplier: 2),
-            stackView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 2),
-            view.trailingAnchor.constraint(equalToSystemSpacingAfter: stackView.trailingAnchor, multiplier: 2)
-        ])
         profileImageView.sd_setImage(with: user.profileImageUrl)
+        
+        let mainStackView = UIStackView(arrangedSubviews: [replyLabel, stackView])
+        mainStackView.axis = .vertical
+        mainStackView.translatesAutoresizingMaskIntoConstraints = false
+        mainStackView.spacing = 12
+        view.addSubview(mainStackView)
+        NSLayoutConstraint.activate([
+            mainStackView.topAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.topAnchor, multiplier: 2),
+            mainStackView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 2),
+            view.trailingAnchor.constraint(equalToSystemSpacingAfter: mainStackView.trailingAnchor, multiplier: 2)
+        ])
+        
+        actionButton.setTitle(viewModel.actionButtonTitle, for: .normal)
+        replyLabel.isHidden = !viewModel.shouldShowReplyLabel
+        captionTextView.placeholderLabel.text = viewModel.placeHolderText
+        
+        guard let replyText = viewModel.replyText else { return }
+        replyLabel.text = replyText
     }
     
     private func configureNavigationBar() {
@@ -93,7 +118,7 @@ extension UploadTweetController {
     @objc private func handleUploadTweet() {
         guard let caption = captionTextView.text else { return }
         
-        TweetService.shared.uploadTweet(caption: caption) { error, ref in
+        TweetService.shared.uploadTweet(caption: caption, type: config) { error, ref in
             if let error {
                 print("uploading tweet failed with error: \(error.localizedDescription)")
                 return

@@ -117,4 +117,12 @@ extension FeedController: TweetCellDelegate {
         let controller = ProfileController(user: user)
         navigationController?.pushViewController(controller, animated: true)
     }
+    
+    func handleReplyTapped(_ cell: TweetCell) {
+        guard let tweet = cell.tweet else { return }
+        let controller = UploadTweetController(user: tweet.user, config: .reply(tweet))
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true)
+    }
 }

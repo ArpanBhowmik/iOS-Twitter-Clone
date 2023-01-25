@@ -7,8 +7,13 @@
 
 import UIKit
 
+protocol TweetHeaderDelegate: AnyObject {
+    func showActionSheet()
+}
+
 class TweetHeader: UICollectionReusableView {
     static let reuseIdentifier = "TweetHeader"
+    weak var delegate: TweetHeaderDelegate?
     
     var tweet: Tweet? {
         didSet { configure() }
@@ -226,7 +231,7 @@ class TweetHeader: UICollectionReusableView {
             statsView.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 12),
             statsView.heightAnchor.constraint(equalToConstant: 40),
             
-            actionStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
+            actionStack.topAnchor.constraint(equalTo: statsView.bottomAnchor, constant: 16),
             actionStack.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
     }
@@ -262,7 +267,7 @@ extension TweetHeader {
     }
     
     @objc private func showActionSheet() {
-        
+        delegate?.showActionSheet()
     }
     
     @objc private func handleCommentTap() {

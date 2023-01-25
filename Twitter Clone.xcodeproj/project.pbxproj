@@ -22,8 +22,12 @@
 		CE2D8EFD2975521C0033B6ED /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2D8EFC2975521C0033B6ED /* LoginController.swift */; };
 		CE2D8EFF2975522A0033B6ED /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2D8EFE2975522A0033B6ED /* RegistrationController.swift */; };
 		CE2D8F0129755D340033B6ED /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2D8F0029755D340033B6ED /* Utilities.swift */; };
+		CE2F65642980F3B100BC5DD7 /* UploadTweetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2F65632980F3B100BC5DD7 /* UploadTweetViewModel.swift */; };
 		CE421B492978FC6B001743FD /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE421B482978FC6B001743FD /* UserService.swift */; };
 		CE421B4B29790B24001743FD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE421B4A29790B24001743FD /* User.swift */; };
+		CE62B4AF29811C450028C962 /* ActionSheetLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE62B4AE29811C450028C962 /* ActionSheetLauncher.swift */; };
+		CE62B4B12981260C0028C962 /* ActionSheetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE62B4B02981260C0028C962 /* ActionSheetCell.swift */; };
+		CE62B4B32981537C0028C962 /* ActionSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE62B4B22981537C0028C962 /* ActionSheetViewModel.swift */; };
 		CE8786F12977F8D100AEE8D2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8786F02977F8D100AEE8D2 /* Constants.swift */; };
 		CE8786F3297804ED00AEE8D2 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8786F2297804ED00AEE8D2 /* AuthService.swift */; };
 		CE8AB40B297FA5AD00D0A4D2 /* TweetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8AB40A297FA5AD00D0A4D2 /* TweetController.swift */; };
@@ -63,8 +67,12 @@
 		CE2D8EFC2975521C0033B6ED /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		CE2D8EFE2975522A0033B6ED /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		CE2D8F0029755D340033B6ED /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		CE2F65632980F3B100BC5DD7 /* UploadTweetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadTweetViewModel.swift; sourceTree = "<group>"; };
 		CE421B482978FC6B001743FD /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		CE421B4A29790B24001743FD /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		CE62B4AE29811C450028C962 /* ActionSheetLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetLauncher.swift; sourceTree = "<group>"; };
+		CE62B4B02981260C0028C962 /* ActionSheetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetCell.swift; sourceTree = "<group>"; };
+		CE62B4B22981537C0028C962 /* ActionSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetViewModel.swift; sourceTree = "<group>"; };
 		CE8786F02977F8D100AEE8D2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CE8786F2297804ED00AEE8D2 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		CE8AB40A297FA5AD00D0A4D2 /* TweetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetController.swift; sourceTree = "<group>"; };
@@ -182,6 +190,8 @@
 			children = (
 				CECA96F7297AA35E00412971 /* TweetViewModel.swift */,
 				CF3E6842297DB7930086A391 /* ProfileHeaderViewModel.swift */,
+				CE2F65632980F3B100BC5DD7 /* UploadTweetViewModel.swift */,
+				CE62B4B22981537C0028C962 /* ActionSheetViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -196,6 +206,7 @@
 				CFABF786297D7E5D00C462DF /* ProfileFilterCell.swift */,
 				CEB13D02297E935900D23604 /* UserCell.swift */,
 				CE8AB40C297FA70B00D0A4D2 /* TweetHeader.swift */,
+				CE62B4B02981260C0028C962 /* ActionSheetCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -215,6 +226,7 @@
 				CE2D8EF929754A960033B6ED /* Extensions.swift */,
 				CE2D8F0029755D340033B6ED /* Utilities.swift */,
 				CE8786F02977F8D100AEE8D2 /* Constants.swift */,
+				CE62B4AE29811C450028C962 /* ActionSheetLauncher.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -351,10 +363,12 @@
 				CE2D8EF829753B3A0033B6ED /* ConversationsController.swift in Sources */,
 				CEB13D03297E935900D23604 /* UserCell.swift in Sources */,
 				CE2D8F0129755D340033B6ED /* Utilities.swift in Sources */,
+				CE62B4B12981260C0028C962 /* ActionSheetCell.swift in Sources */,
 				CE2D8ED6297537FC0033B6ED /* AppDelegate.swift in Sources */,
 				CE2D8EFA29754A960033B6ED /* Extensions.swift in Sources */,
 				CE8AB40B297FA5AD00D0A4D2 /* TweetController.swift in Sources */,
 				CF16741D297C28350068D5F6 /* ProfileController.swift in Sources */,
+				CE2F65642980F3B100BC5DD7 /* UploadTweetViewModel.swift in Sources */,
 				CF4E295D297C64C0006B034A /* ProfileHeader.swift in Sources */,
 				CECD0B2A297A601B0041EE82 /* TweetCell.swift in Sources */,
 				CE2D8EFD2975521C0033B6ED /* LoginController.swift in Sources */,
@@ -367,10 +381,12 @@
 				CE2D8EF0297539770033B6ED /* MainTabController.swift in Sources */,
 				CE8AB40D297FA70B00D0A4D2 /* TweetHeader.swift in Sources */,
 				CECA96F8297AA35E00412971 /* TweetViewModel.swift in Sources */,
+				CE62B4B32981537C0028C962 /* ActionSheetViewModel.swift in Sources */,
 				CE2D8EFF2975522A0033B6ED /* RegistrationController.swift in Sources */,
 				CE2D8EF229753AF10033B6ED /* FeedController.swift in Sources */,
 				CFABF785297D7BD700C462DF /* ProfileFilterView.swift in Sources */,
 				CE8786F12977F8D100AEE8D2 /* Constants.swift in Sources */,
+				CE62B4AF29811C450028C962 /* ActionSheetLauncher.swift in Sources */,
 				CEFCECEB29795A3E001DDE65 /* Tweet.swift in Sources */,
 				CE8C7D4929793C86008159F3 /* TweetService.swift in Sources */,
 			);
