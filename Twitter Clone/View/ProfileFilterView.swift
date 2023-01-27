@@ -26,6 +26,14 @@ class ProfileFilterView: UIView {
         return collectionView
     }()
     
+    private lazy var underlineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .twitterBlue
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         layout()
@@ -36,6 +44,15 @@ class ProfileFilterView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        addSubview(underlineView)
+        
+        underlineView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        underlineView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        underlineView.widthAnchor.constraint(equalToConstant: frame.width / 3).isActive = true
+        underlineView.heightAnchor.constraint(equalToConstant: 2).isActive = true
     }
     
     private func layout() {
@@ -64,6 +81,12 @@ extension ProfileFilterView: UICollectionViewDelegate, UICollectionViewDataSourc
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        let newPos = cell?.frame.origin.x ?? 0
+        
+        UIView.animate(withDuration: 0.3) {
+            self.underlineView.frame.origin.x = newPos
+        }
         delegate?.filterView(self, didSelect: indexPath)
     }
 }

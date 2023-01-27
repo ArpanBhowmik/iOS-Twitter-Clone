@@ -123,6 +123,11 @@ extension UploadTweetController {
                 print("uploading tweet failed with error: \(error.localizedDescription)")
                 return
             }
+            
+            if case let .reply(tweet) = self.config {
+                NotificationService.shared.uploadNotification(type: .reply, tweet: tweet)
+            }
+            
             self.dismiss(animated: true)
         }
     }

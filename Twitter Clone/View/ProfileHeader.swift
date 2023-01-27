@@ -97,14 +97,6 @@ class ProfileHeader: UICollectionReusableView {
         return userDetailsStack
     }()
     
-    private lazy var underlineView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .twitterBlue
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        return view
-    }()
-    
     private lazy var filterBar: ProfileFilterView = {
         let filterBar = ProfileFilterView()
         filterBar.translatesAutoresizingMaskIntoConstraints = false
@@ -160,7 +152,6 @@ class ProfileHeader: UICollectionReusableView {
         addSubview(editProfileFollowButton)
         addSubview(userDetailsStackView)
         addSubview(filterBar)
-        addSubview(underlineView)
         addSubview(followStack)
                 
         NSLayoutConstraint.activate([
@@ -198,13 +189,7 @@ class ProfileHeader: UICollectionReusableView {
             filterBar.trailingAnchor.constraint(equalTo: trailingAnchor),
             filterBar.bottomAnchor.constraint(equalTo: bottomAnchor),
             filterBar.heightAnchor.constraint(equalToConstant: 50),
-            
-            //underlineView
-            underlineView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            underlineView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            underlineView.widthAnchor.constraint(equalToConstant: frame.width / 3),
-            underlineView.heightAnchor.constraint(equalToConstant: 2),
-            
+                        
             //followStack
             followStack.topAnchor.constraint(equalTo: userDetailsStackView.bottomAnchor, constant: 8),
             followStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12)
@@ -249,12 +234,6 @@ extension ProfileHeader {
 //MARK: - FilterViewDelegate
 extension ProfileHeader: ProfileFilterViewDelegate {
     func filterView(_ view: ProfileFilterView, didSelect indexPath: IndexPath) {
-        guard let cell = view.collectionView.cellForItem(at: indexPath) else { return }
 
-        let newPos = cell.frame.origin.x
-        
-        UIView.animate(withDuration: 0.3) {
-            self.underlineView.frame.origin.x = newPos
-        }
     }
 }

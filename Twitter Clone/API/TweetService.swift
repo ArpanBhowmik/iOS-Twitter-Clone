@@ -68,6 +68,18 @@ struct TweetService {
         }
     }
     
+    func fetchTweet(forTweetId tweetId: String, completion: @escaping (Tweet) -> Void) {
+        REF_TWEETS.child(tweetId).observeSingleEvent(of: .value) { snapshot in
+            guard let dictionary = snapshot.value as? [String: AnyObject] else { return }
+            guard let uid = dictionary["uid"] as? String else { return }
+            
+            UserService.shared.fetchUser(uid: uid) { user in
+                let tweet = Tweet(user: user, tweetID: tweetId, dictionary: dictionary)
+                completion(tweet)
+            }
+        }
+    }
+    
     func fetchReplies(fortweet tweet: Tweet, completion: @escaping ([Tweet]) -> Void) {
         var tweets = [Tweet]()
         
@@ -81,6 +93,31 @@ struct TweetService {
                 tweets.append(tweet)
                 completion(tweets)
             }
+        }
+    }
+    
+    func likeTweet(tweet: Tweet, completion: @escaping (Error?, DatabaseReference) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        let likes = tweet.didLike ? tweet.likes - 1 : tweet.likes + 1
+        REF_TWEETS.child(tweet.tweetID).child("likes").setValue(likes)
+        
+        if tweet.didLike {
+            REF_USER_LIKES.child(uid).child(tweet.tweetID).removeValue { error, ref in
+                REF_TWEET_LIKES.child(tweet.tweetID).child(uid).removeValue(completionBlock: completion)
+            }
+        } else {
+            REF_USER_LIKES.child(uid).updateChildValues([tweet.tweetID: 1]) { error, ref in
+                REF_TWEET_LIKES.child(tweet.tweetID).updateChildValues([uid: 1], withCompletionBlock: completion)
+            }
+        }
+    }
+    
+    func checkIfUserLikeTweet(_ tweet: Tweet, completion: @escaping (Bool) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        REF_USER_LIKES.child(uid).child(tweet.tweetID).observeSingleEvent(of: .value) { snapshot in
+            completion(snapshot.exists())
         }
     }
 }
