@@ -34,7 +34,10 @@ struct TweetService {
         case .reply(let tweet):
             let ref = REF_TWEET_REPLIES.child(tweet.tweetID).childByAutoId()
             
-            ref.updateChildValues(values, withCompletionBlock: completion)
+            ref.updateChildValues(values) { error, ref in
+                guard let replyKey = ref.key else { return }
+                REF_USER_REPLIES.child(uid).updateChildValues([tweet.tweetID: replyKey], withCompletionBlock: completion)
+            }
         }
     }
     
@@ -80,6 +83,20 @@ struct TweetService {
         }
     }
     
+    func fetchLikes(forUser user: User, completion: @escaping ([Tweet]) -> Void) {
+        var tweets = [Tweet]()
+        
+        REF_USER_LIKES.child(user.uid).observe(.childAdded) { snapshot in
+            let tweetID = snapshot.key
+            fetchTweet(forTweetId: tweetID) { likedTweet in
+                var tweet = likedTweet
+                tweet.didLike = true
+                tweets.append(tweet)
+                completion(tweets)
+            }
+        }
+    }
+    
     func fetchReplies(fortweet tweet: Tweet, completion: @escaping ([Tweet]) -> Void) {
         var tweets = [Tweet]()
         
@@ -93,6 +110,15 @@ struct TweetService {
                 tweets.append(tweet)
                 completion(tweets)
             }
+        }
+    }
+    
+    func fetchReplies(forUser user: User, completion: @escaping ([Tweet]) -> Void) {
+        var tweets = [Tweet]()
+        
+        REF_USER_REPLIES.child(user.uid).observe(.childAdded) { snapshot in
+            let tweetKey = snapshot.key
+            guard let replyKey = snapshot.value as? String else { return }
         }
     }
     

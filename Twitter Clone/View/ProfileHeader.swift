@@ -10,6 +10,7 @@ import UIKit
 protocol ProfileHeaderDelegate: AnyObject {
     func handleDismiss()
     func handleEditProfileFollow(_ header: ProfileHeader)
+    func didSelect(options: ProfileFilterOptions)
 }
 
 class ProfileHeader: UICollectionReusableView {
@@ -234,6 +235,7 @@ extension ProfileHeader {
 //MARK: - FilterViewDelegate
 extension ProfileHeader: ProfileFilterViewDelegate {
     func filterView(_ view: ProfileFilterView, didSelect indexPath: IndexPath) {
-
+        guard let filter = ProfileFilterOptions(rawValue: indexPath.row) else { return }
+        delegate?.didSelect(options: filter)
     }
 }
