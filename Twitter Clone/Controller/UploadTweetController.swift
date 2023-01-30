@@ -5,6 +5,7 @@
 //  Created by m-arpan-b on 19/1/23.
 //
 
+import ActiveLabel
 import UIKit
 
 class UploadTweetController: UIViewController {
@@ -42,13 +43,12 @@ class UploadTweetController: UIViewController {
         return imageView
     }()
     
-    private lazy var replyLabel: UILabel = {
-        let label = UILabel()
+    private lazy var replyLabel: ActiveLabel = {
+        let label = ActiveLabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .lightGray
-        label.text = "Replying to"
-        
+        label.mentionColor = .twitterBlue
         return label
     }()
 
@@ -67,6 +67,7 @@ class UploadTweetController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        configureMentionHandler()
     }
     
     private func configureUI() {
@@ -105,6 +106,12 @@ class UploadTweetController: UIViewController {
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(handleCancel))
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: actionButton)
+    }
+    
+    private func configureMentionHandler() {
+        replyLabel.handleMentionTap { _ in
+            
+        }
     }
 }
 

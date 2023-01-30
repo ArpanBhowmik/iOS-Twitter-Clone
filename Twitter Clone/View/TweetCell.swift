@@ -96,29 +96,42 @@ class TweetCell: UICollectionViewCell {
         return button
     }()
     
+    private lazy var replyLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = .lightGray
+        label.text = "replying to"
+        return label
+    }()
+    
     private let infoLabel = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         backgroundColor = .white
         
-        addSubview(profileImageView)
-        NSLayoutConstraint.activate([
-            profileImageView.leadingAnchor.constraint(equalToSystemSpacingAfter: leadingAnchor, multiplier: 1),
-            profileImageView.topAnchor.constraint(equalTo: topAnchor, constant: 8)
-        ])
+        let captionStack = UIStackView(arrangedSubviews: [infoLabel, captionLabel])
+        captionStack.translatesAutoresizingMaskIntoConstraints = false
+        captionStack.axis = .vertical
+        captionStack.spacing = 4
         
-        let stackView = UIStackView(arrangedSubviews: [infoLabel, captionLabel])
+        let imageCaptionStack = UIStackView(arrangedSubviews: [profileImageView, captionStack])
+        imageCaptionStack.translatesAutoresizingMaskIntoConstraints = false
+        imageCaptionStack.axis = .horizontal
+        imageCaptionStack.alignment = .leading
+        imageCaptionStack.spacing = 12
+        
+        let stackView = UIStackView(arrangedSubviews: [replyLabel, imageCaptionStack])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.spacing = 4
+        stackView.spacing = 8
         
         addSubview(stackView)
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: profileImageView.topAnchor),
-            stackView.leadingAnchor.constraint(equalToSystemSpacingAfter: profileImageView.trailingAnchor, multiplier: 1),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8)
+            stackView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12)
         ])
         
         infoLabel.text = "Arpan Bhowmik @arpan.b"
@@ -159,6 +172,9 @@ class TweetCell: UICollectionViewCell {
         
         likeButton.tintColor = viewModel.likeButtonTintColor
         likeButton.setImage(viewModel.likeButtonImage, for: .normal)
+        
+        replyLabel.isHidden = viewModel.shouldHideReply
+        replyLabel.text = viewModel.replyText
     }
 }
 

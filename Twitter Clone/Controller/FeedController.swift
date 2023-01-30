@@ -45,6 +45,10 @@ class FeedController: UICollectionViewController {
         navigationItem.titleView = imageView
         
         collectionView.register(TweetCell.self, forCellWithReuseIdentifier: TweetCell.reuseIdentifier)
+        
+        let refreshControl = UIRefreshControl()
+        collectionView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
     }
     
     private func configureProfileImage() {
@@ -68,18 +72,22 @@ class FeedController: UICollectionViewController {
     }
     
     private func fetchTweets() {
+        collectionView.refreshControl?.beginRefreshing()
         TweetService.shared.fetchTweets { tweets in
-            self.tweets = tweets
-            self.checkIfUserLikedTweets(tweets)
+            self.tweets = tweets.sorted(by: { $0.timestamp > $1.timestamp })
+            self.checkIfUserLikedTweets()
+            self.collectionView.refreshControl?.endRefreshing()
         }
     }
     
-    private func checkIfUserLikedTweets(_ tweets: [Tweet]) {
-        for (index, tweet) in tweets.enumerated() {
+    private func checkIfUserLikedTweets() {
+        tweets.forEach { tweet in
             TweetService.shared.checkIfUserLikeTweet(tweet) { didLike in
                 guard didLike == true else { return }
                 
-                self.tweets[index].didLike = true
+                if let index = self.tweets.firstIndex(where: { $0.tweetID == tweet.tweetID }) {
+                    self.tweets[index].didLike = true
+                }
             }
         }
     }
@@ -90,6 +98,10 @@ class FeedController: UICollectionViewController {
             nav.modalPresentationStyle = .fullScreen
             self.present(nav, animated: true)
         }
+    }
+    
+    @objc private func handleRefresh() {
+        fetchTweets()
     }
 }
 
