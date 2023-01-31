@@ -5,6 +5,7 @@
 //  Created by Arpan Bhowmik on 21/1/23.
 //
 
+import Firebase
 import UIKit
 
 class ProfileController: UICollectionViewController {
@@ -174,6 +175,18 @@ extension ProfileController: ProfileHeaderDelegate {
 }
 
 extension ProfileController: EditProfileControllerDelegate {
+    func handleLogout() {
+        do {
+            try Auth.auth().signOut()
+            let nav = UINavigationController(rootViewController: LoginController())
+            nav.modalPresentationStyle = .fullScreen
+            self.present(nav, animated: true)
+            
+        } catch let error {
+            print("logout error is \(error.localizedDescription)")
+        }
+    }
+    
     func controller(_ controller: EditProfileController, user: User) {
         controller.dismiss(animated: true)
         self.user = user

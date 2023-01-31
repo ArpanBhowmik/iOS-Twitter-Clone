@@ -67,8 +67,9 @@ class FeedController: UICollectionViewController {
         profileImageView.sd_setImage(with: user.profileImageUrl)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: profileImageView)
         
-        //Logout for now. Will be improved later
-       // navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Logout", image: nil, target: self, action: #selector(handleLogout))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleProfileImageTap))
+        profileImageView.isUserInteractionEnabled = true
+        profileImageView.addGestureRecognizer(tap)
     }
     
     private func fetchTweets() {
@@ -103,6 +104,12 @@ class FeedController: UICollectionViewController {
     @objc private func handleRefresh() {
         fetchTweets()
     }
+    
+    @objc private func handleProfileImageTap() {
+        guard let user else { return }
+        let controller = ProfileController(user: user)
+        navigationController?.pushViewController(controller, animated: true)
+    }
 }
 
 //MARK: - UICollectionView Delegate / DataSource
@@ -135,6 +142,13 @@ extension FeedController: UICollectionViewDelegateFlowLayout {
 
 //MARK: - TweetCell Delegate
 extension FeedController: TweetCellDelegate {
+    func handleMentionUser(withUsername username: String) {
+        UserService.shared.fetchUser(withUsername: username) { user in
+            let controller = ProfileController(user: user)
+            self.navigationController?.pushViewController(controller, animated: true)
+        }
+    }
+    
     func handleLike(_ cell: TweetCell) {
         guard let tweet = cell.tweet else { return }
         TweetService.shared.likeTweet(tweet: tweet) { error, ref in

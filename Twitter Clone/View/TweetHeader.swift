@@ -5,6 +5,7 @@
 //  Created by m-arpan-b on 24/1/23.
 //
 
+import ActiveLabel
 import UIKit
 
 protocol TweetHeaderDelegate: AnyObject {
@@ -74,12 +75,13 @@ class TweetHeader: UICollectionReusableView {
         return stack
     }()
     
-    private lazy var captionLabel: UILabel = {
-        let label = UILabel()
+    private lazy var captionLabel: ActiveLabel = {
+        let label = ActiveLabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 20)
-        label.text = "This is some caption for testing."
+        label.mentionColor = .twitterBlue
+        label.hashtagColor = .twitterBlue
         
         return label
     }()

@@ -5,12 +5,14 @@
 //  Created by m-arpan-b on 20/1/23.
 //
 
+import ActiveLabel
 import UIKit
 
 protocol TweetCellDelegate: AnyObject {
     func handleProfileImageTapped(_ cell: TweetCell)
     func handleReplyTapped(_ cell: TweetCell)
     func handleLike(_ cell: TweetCell)
+    func handleMentionUser(withUsername username: String)
 }
 
 class TweetCell: UICollectionViewCell {
@@ -40,11 +42,13 @@ class TweetCell: UICollectionViewCell {
         return profileImageView
     }()
     
-    private lazy var captionLabel: UILabel = {
-        let label = UILabel()
+    private lazy var captionLabel: ActiveLabel = {
+        let label = ActiveLabel()
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 16)
         label.text = "Some test Caption."
+        label.mentionColor = .twitterBlue
+        label.hashtagColor = .twitterBlue
         return label
     }()
     
@@ -96,12 +100,13 @@ class TweetCell: UICollectionViewCell {
         return button
     }()
     
-    private lazy var replyLabel: UILabel = {
-        let label = UILabel()
+    private lazy var replyLabel: ActiveLabel = {
+        let label = ActiveLabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .lightGray
         label.text = "replying to"
+        label.mentionColor = .twitterBlue
         return label
     }()
     
@@ -156,6 +161,8 @@ class TweetCell: UICollectionViewCell {
         actionStack.spacing = 72
         actionStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8).isActive = true
         actionStack.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        
+        configureMentionHandler()
     }
     
     required init?(coder: NSCoder) {
@@ -175,6 +182,12 @@ class TweetCell: UICollectionViewCell {
         
         replyLabel.isHidden = viewModel.shouldHideReply
         replyLabel.text = viewModel.replyText
+    }
+    
+    private func configureMentionHandler() {
+        captionLabel.handleMentionTap { mention in
+            self.delegate?.handleMentionUser(withUsername: mention)
+        }
     }
 }
 

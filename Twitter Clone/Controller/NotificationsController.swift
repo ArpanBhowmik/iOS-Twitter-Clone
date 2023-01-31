@@ -36,6 +36,7 @@ class NotificationsController: UITableViewController {
         refreshControl?.beginRefreshing()
         
         NotificationService.shared.fetchNotifications { notifications in
+            guard !notifications.isEmpty else { return }
             self.notifications = notifications
             self.refreshControl?.endRefreshing()
             
