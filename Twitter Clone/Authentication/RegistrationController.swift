@@ -12,7 +12,7 @@ class RegistrationController: UIViewController {
     private let imagePicker = UIImagePickerController()
     private var profileImage: UIImage?
     
-    private let plusPhotoButton: UIButton = {
+    private lazy var plusPhotoButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = .white
         button.setImage(UIImage(named: "plus_photo"), for: .normal)
@@ -20,7 +20,7 @@ class RegistrationController: UIViewController {
         return button
     }()
     
-    private let alreadyHaveAccountButton: UIButton = {
+    private lazy var alreadyHaveAccountButton: UIButton = {
         let button = Utilities().attributedButton("Already have an account?", " Log In")
         button.addTarget(self, action: #selector(handleShowLogin), for: .touchUpInside)
         return button
@@ -64,7 +64,7 @@ class RegistrationController: UIViewController {
         return Utilities().textField(withPlaceholder: "Username")
     }()
     
-    private let SignUpButton: UIButton = {
+    private lazy var SignUpButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Sign Up", for: .normal)
         button.setTitleColor(.twitterBlue, for: .normal)
