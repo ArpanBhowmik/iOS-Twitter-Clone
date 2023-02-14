@@ -28,6 +28,11 @@ https://user-images.githubusercontent.com/50268315/218816375-406f182d-a583-465f-
 ## Mentioning and Going to Profile after clicking mention
 https://user-images.githubusercontent.com/50268315/218817133-1227c2d5-6796-4501-b86b-a6979182968f.mov
 
+## Follow/Unfollow
+https://user-images.githubusercontent.com/50268315/218817837-ca89e94d-c70b-4a3f-979d-10bfe6a0d463.mov
+
+
+
 
 
 
