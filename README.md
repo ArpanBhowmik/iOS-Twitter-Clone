@@ -2,7 +2,7 @@
 Some Features like Twitter iOS App
 
 ## Login Screen
-![Login](https://user-images.githubusercontent.com/50268315/218809995-80d70cf4-f8f3-4b73-ba3b-fb4f7829cd82.png)
+![Login](https://user-images.githubusercontent.com/50268315/218809995-80d70cf4-f8f3-4b73-ba3b-fb4f7829cd82.png = =250x250)
 
 
 ## Registration Screen
