@@ -19,6 +19,10 @@ https://user-images.githubusercontent.com/50268315/218812943-26a3f887-e3bd-4d84-
 ## Like / Reply
 https://user-images.githubusercontent.com/50268315/218814870-62f8ad5a-0c8b-4f60-add9-fbaea03b0a67.mov
 
+# Notification
+<img src="https://user-images.githubusercontent.com/50268315/218815325-cc4c4329-bd46-4b2b-8b21-f3f0c11e1f33.png" width="250" height="500">
+
+
 
 
 
