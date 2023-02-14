@@ -19,8 +19,18 @@ https://user-images.githubusercontent.com/50268315/218812943-26a3f887-e3bd-4d84-
 ## Like / Reply
 https://user-images.githubusercontent.com/50268315/218814870-62f8ad5a-0c8b-4f60-add9-fbaea03b0a67.mov
 
-# Notification
+## Notification
 <img src="https://user-images.githubusercontent.com/50268315/218815325-cc4c4329-bd46-4b2b-8b21-f3f0c11e1f33.png" width="250" height="500">
+
+## Search For a User
+https://user-images.githubusercontent.com/50268315/218816375-406f182d-a583-465f-a44a-b4b1674a9b2b.mov
+
+## Mentioning and Going to Profile after clicking mention
+https://user-images.githubusercontent.com/50268315/218817133-1227c2d5-6796-4501-b86b-a6979182968f.mov
+
+
+
+
 
 
 
