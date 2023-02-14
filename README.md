@@ -10,6 +10,11 @@ https://user-images.githubusercontent.com/50268315/218809673-7e8f14b9-2598-4c2d-
 ## User Profile
 https://user-images.githubusercontent.com/50268315/218812087-53e7e217-e7ff-4b8f-bb6b-6939bf012bb8.mov
 
+## Posting Tweet
+https://user-images.githubusercontent.com/50268315/218812943-26a3f887-e3bd-4d84-a66c-7d532a275184.mov
+
+
+
 
 
 
