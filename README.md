@@ -13,6 +13,10 @@ https://user-images.githubusercontent.com/50268315/218812087-53e7e217-e7ff-4b8f-
 ## Posting Tweet
 https://user-images.githubusercontent.com/50268315/218812943-26a3f887-e3bd-4d84-a66c-7d532a275184.mov
 
+## User Feed
+ <img src="https://user-images.githubusercontent.com/50268315/218809995-80d70cf4-f8f3-4b73-ba3b-fb4f7829cd82.png" width="250" height="500">
+
+
 
 
 
